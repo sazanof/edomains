@@ -1,0 +1,46 @@
+<div class="module-content">
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table grid">
+                <thead>
+                <tr>
+                    <td class="gridHeader">Ключ переменной</td>
+                    <td class="gridHeader">Тип</td>
+                    <td class="gridHeader">Значение по умолчанию</td>
+                    <td class="gridHeader">Действия</td>
+                </tr>
+                </thead>
+                <tbody>[+table_content+]</tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <div class="box">
+                <h2 class="box-title">[+editOrCreate+]</h2>
+                <form action="" method="post">
+                    <input type="hidden" name="formid" value="globalVarForm">
+                    <input type="hidden" name="id" value="[+fields.id+]">
+                    <div class="form-group">
+                        <label for="">Ключ переменной</label>
+                        <input type="text" name="key" value="[+fields.key+]" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="globalVarType">Тип глобальной переменной</label>
+                        <select name="type" id="globalVarType" required>
+                            <option>Не выбрано</option>
+                            <option value="1" [+fields.type_1+]>Текстовое поле</option>
+                            <option value="2" [+fields.type_2+]>Визуальный редактор</option>
+                            <option value="3" [+fields.type_3+]>Чанк</option>
+                            <option value="4" [+fields.type_4+]>Системное поле</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div id="globalVarTypeResult"></div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success"><i class="fa fa-save"></i> Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
