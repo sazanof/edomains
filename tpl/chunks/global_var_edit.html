@@ -1,12 +1,12 @@
-<div class="form-group variable-value">
+<div class="form-group variable-value" data-gvar-id="">
     <div class="variable-info">
-        <h4>Переменная <b>[+key+]</b></h4>
+        <h4><b>[+description+]</b>: [+key+]</h4>
         <div><i>ТИП: <b>[+type_text+]</b></i></div>
         <small>значение по умолчанию "[+default_value+]"</small>
     </div>
 
     [!if? &is=`[+type+]:in:1,3,4` &then=`
-    <input type="text" name="value">
+    <input type="text" name="value" value="[+value_value+]">
     `!]
     [!if? &is=`[+type+]:=:2` &then=`
     <textarea name="value" id="" cols="30" rows="10"></textarea>

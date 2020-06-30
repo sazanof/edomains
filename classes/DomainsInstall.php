@@ -48,6 +48,7 @@ class DomainsInstall
         ( 
         `id` INT NOT NULL AUTO_INCREMENT , 
         `key` VARCHAR(255) NOT NULL , 
+        `description` VARCHAR(255) NOT NULL , 
         `type` VARCHAR(255) NOT NULL , 
         `default_value` TEXT NOT NULL , PRIMARY KEY (`id`),
         UNIQUE (`key`)
@@ -58,6 +59,7 @@ class DomainsInstall
         ( 
         `id` INT NOT NULL AUTO_INCREMENT , 
         `domain_id` INT NOT NULL, 
+        `key_id` INT NOT NULL, 
         `value` TEXT NOT NULL , PRIMARY KEY (`id`)
         )";
         $in->db->query($sql);

@@ -116,8 +116,15 @@ class Domains extends DomainsInstall
         }
     }
 
-    public function getGlobalVars(){
-        return $this->db->makeArray($this->db->select('*',$this->tbl_global_vars));
+    public function getGlobalVars($domain_id = false){
+        $sql = "SELECT g.id,g.key,g.type,g.description,g.default_value,v.id as value_id, v.value as value_value 
+        FROM {$this->tbl_global_vars} as g 
+        LEFT JOIN {$this->tbl_global_vars_values} as v
+        ON g.id = v.key_id";
+        if($domain_id){
+            $sql .= " AND v.domain_id = {$domain_id}";
+        }
+        return $this->db->makeArray($this->db->query($sql));
     }
 
     public function getGlobalVar($id){
@@ -126,6 +133,10 @@ class Domains extends DomainsInstall
 
     public function addGlobalVar($data){
         return $this->db->insert($data,$this->tbl_global_vars);
+    }
+
+    public function editGlobalVar($data,$id){
+        return $this->db->update($data,$this->tbl_global_vars,"id={$id}");
     }
 
 

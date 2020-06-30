@@ -56,6 +56,7 @@ switch ($_POST['formid']) {
         $page_data['fields'] = array(
             'id' => intval($_POST['id']),
             'key' => $_POST['key'],
+            'description' => $_POST['description'],
             'default_value' => $_POST['default_value'],
             'type' => intval($_POST['type']),
             'type_' . intval($_POST['type']) => 'selected',
@@ -63,12 +64,21 @@ switch ($_POST['formid']) {
         $toDb = array(
             'key' => evolutionCMS()->db->escape($_POST['key']),
             'type' => intval($_POST['type']),
+            'description' => evolutionCMS()->db->escape($_POST['description']),
             'default_value' => evolutionCMS()->db->escape($_POST['default_value'])
         );
         if (!in_array('', $toDb)) {
-            if ($d->addGlobalVar($toDb)) {
-                evolutionCMS()->sendRedirect($_SERVER['REQUEST_URI']);
+            if(intval($_POST['id'])){
+                if ($d->editGlobalVar($toDb,intval($_POST['id']))) {
+                    evolutionCMS()->sendRedirect($_SERVER['REQUEST_URI']);
+                }
             }
+            else {
+                if ($d->addGlobalVar($toDb)) {
+                    evolutionCMS()->sendRedirect($_SERVER['REQUEST_URI']);
+                }
+            }
+
         }
         break;
 }
@@ -81,6 +91,7 @@ $table = '';
 foreach ($vars as $var) {
     $type = $d->getVarType($var['type']);
     $table .= '<tr>
+    <td><i>' . $var['description'] . '</i></td>
     <td><b>' . $var['key'] . '</b></td>
     <td>' . $type . '</td>
     <td>' . $var['default_value'] . '</td>
