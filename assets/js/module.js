@@ -71,4 +71,22 @@ document.addEventListener('DOMContentLoaded',function () {
             Edomains.changeVarType();
         })
     }
+    var gVarBlocks = document.querySelectorAll('[data-gvar-id]');
+    if (gVarBlocks.length > 0){
+        for (var i=0;i<gVarBlocks.length;i++){
+            gVarBlocks[i].querySelector('form').onsubmit = function (e) {
+                e.preventDefault();
+                var data = new FormData(this);
+                var form = this;
+                Edomains.sendXhr(data,function (json) {
+                    if(json.create > 0){
+                        form.querySelector('[name="var_id"]').value = json.create;
+                    }
+                    if(json.delete > 0){
+                        form.querySelector('[name="var_id"]').value = '';
+                    }
+                })
+            }
+        }
+    }
 })

@@ -1,15 +1,19 @@
-<div class="form-group variable-value" data-gvar-id="">
-    <div class="variable-info">
-        <h4><b>[+description+]</b>: [+key+]</h4>
-        <div><i>ТИП: <b>[+type_text+]</b></i></div>
-        <small>значение по умолчанию "[+default_value+]"</small>
-    </div>
-
-    [!if? &is=`[+type+]:in:1,3,4` &then=`
-    <input type="text" name="value" value="[+value_value+]">
-    `!]
-    [!if? &is=`[+type+]:=:2` &then=`
-    <textarea name="value" id="" cols="30" rows="10"></textarea>
-    `!]
-    <button class="btn btn-secondary"><i class="fa fa-check"></i></button>
+<div class="form-group variable-value" data-gvar-id="[+id+]">
+    <form name="gvForm_[+id+]">
+        <input type="hidden" name="domain_id" value="[+domain.id+]">
+        <input type="hidden" name="key_id" value="[+id+]">
+        <input type="hidden" name="var_id" value="[+value_id+]">
+        <div class="variable-info">
+            <h4><b>[+description+]</b>: [+key+]</h4>
+            <div><i>ТИП: <b>[+type_text+]</b></i></div>
+            <small>значение по умолчанию "[+default_value+]"</small>
+        </div>
+        [!if? &is=`[+type+]:in:1,3,4` &then=`
+        <input type="text" name="var_value" value="[+value_value+]">
+        `!]
+        [!if? &is=`[+type+]:=:2` &then=`
+        <textarea name="var_value" id="" cols="30" rows="10"></textarea>
+        `!]
+        <button class="btn btn-secondary"><i class="fa fa-check"></i></button>
+    </form>
 </div>

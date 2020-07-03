@@ -14,7 +14,7 @@ if(count($domains) > 0){
         $table_domains .= '<td width="190">
                             <a href="/manager/index.php?a=112&id='.$_GET['id'].'&ed_action=page_vars&did='.$domain['id'].'" class="btn btn-secondary">Упр</a>
                             <a href="/manager/index.php?a=112&id='.$_GET['id'].'&did='.$domain['id'].'" class="btn btn-primary">Ред</a>
-                            <a href="/manager/index.php?a=112&id='.$_GET['id'].'&ed_action=delete" class="btn btn-danger" data-confirm="Вы уверены, что хотите удалить домен '.$domain['domain'].'?">Уд</a>
+                            <a href="/manager/index.php?a=112&id='.$_GET['id'].'&ed_action=index_table&delete='.$domain['id'].'" class="btn btn-danger" data-confirm="Вы уверены, что хотите удалить домен '.$domain['domain'].'?">Уд</a>
                             </td>';
         $table_domains .= '</tr>';
     }
@@ -32,6 +32,11 @@ if($_GET['did']){
     $page_data['fields'] = $domain;
     $page_data['fields']['status_checked'] = $domain['status'] ? 'checked' : '';
 
+}
+if($_GET['delete']) {
+    $id = intval($_GET['delete']);
+    $d->deleteDomains($id);
+    evolutionCMS()->sendRedirect(explode('&delete=',$_SERVER['REQUEST_URI'])[0]);
 }
 if($_POST['formid'] === 'domainForm'){
     $page_data['fields'] = array(
