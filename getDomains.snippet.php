@@ -15,4 +15,14 @@ foreach ($domains as $domain){
     }
     $out .= $dl->parseChunk($tpl,array('domain'=>$domain));
 }
+$dom = $d->getActiveDomain();
+//var_dump($dom);
+if(is_null($dom)){
+    $dom = array(
+        'title'=>'Липецк',
+        'cl'=>'active'
+    );
+}
+//var_dump($dom);
+evolutionCMS()->toPlaceholders($dom,'ed.');
 return $out;

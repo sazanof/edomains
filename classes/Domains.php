@@ -18,35 +18,34 @@ class Domains extends DomainsInstall
         $this->DL = DLTemplate::getInstance($this->evo);
     }
 
-    public function getActiveDomain($domain){
+    public function getActiveDomain()
+    {
         $host = $_SERVER['HTTP_HOST'];
-        $d = explode('.',$host);
-        if($this->toDomainName($d[0]) === -1){
-            $activeDomain = $this->getDomainByKey($d[0]);
-        }
-        else {
-            $activeDomain = null;
-        }
-        $this->evo->toPlaceholders($activeDomain,'ed');
+        $d = explode('.', $host);
+
+        $activeDomain = $this->getDomainByKey($d[0]);
+
+        $this->evo->toPlaceholders($activeDomain, 'ed.');
+
+
         return $activeDomain;
     }
 
     public function toDomainName($name)
     {
         $host = $_SERVER['HTTP_HOST'];
-        $root = explode('.',$host);
+        $root = explode('.', $host);
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
             $protocol = 'https://';
         } else {
-            $protocol = 'http://';
+            $protocol = 'https://';
         }
-        if(count($root) > 2){
-            $root = $root[count($root) - 2] . '.' .  $root[count($root) - 1];
+        if (count($root) > 2) {
+            $root = $root[count($root) - 2] . '.' . $root[count($root) - 1];
+        } else {
+            $root = implode('.', $root);
         }
-        else {
-            $root = implode('.',$root);
-        }
-        return $protocol . str_replace($root,$name . '.' . $root,$root) . '/';
+        return $protocol . str_replace($root, $name . '.' . $root, $root) . '/';
     }
 
     public function parseTpl($tpl, $data)
@@ -148,7 +147,7 @@ class Domains extends DomainsInstall
                 return 'Текстовое поле';
                 break;
             case 2 :
-                return 'Визуальный редактор';
+                return 'Текстовая область';
                 break;
             case 3 :
                 return 'Чанк';
@@ -159,7 +158,14 @@ class Domains extends DomainsInstall
         }
     }
 
-    public function getGlobalVars($domain_id = false)
+    public function getGlobalVars()
+    {
+        $sql = "SELECT g.id,g.key,g.type,g.description,g.default_value
+        FROM {$this->tbl_global_vars} as g";
+        return $this->db->makeArray($this->db->query($sql));
+    }
+
+    public function getGlobalVarsByDomain($domain_id)
     {
         $sql = "SELECT g.id,g.key,g.type,g.description,g.default_value,v.id as value_id, v.value as value_value 
         FROM {$this->tbl_global_vars} as g 
@@ -186,6 +192,13 @@ class Domains extends DomainsInstall
         return $this->db->update($data, $this->tbl_global_vars, "id={$id}");
     }
 
+    public function deleteGlobalVar($id)
+    {
+        $this->db->delete($this->tbl_global_vars, "id={$id}");
+        $this->db->delete($this->tbl_global_vars_values, "key_id={$id}");
+
+    }
+
     public function createGvValue($data)
     {
         $this->db->insert($data, $this->tbl_global_vars_values);
@@ -201,8 +214,6 @@ class Domains extends DomainsInstall
     {
         return $this->db->delete($this->tbl_global_vars_values, "id={$id}");
     }
-
-
 
 
 }

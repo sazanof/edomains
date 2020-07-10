@@ -8,3 +8,4 @@
 .variable-value {padding-left: 3rem;position: relative}
 .variable-value button {position: absolute;top:4.2rem;left:0}
 .variable-info {margin-left: -3rem;margin-bottom:0.3rem}
+.nav-tabs {display:flex}

@@ -13,7 +13,7 @@ if (!isset($_GET['var_type'])) {
 switch ($_GET['var_type']) {
     case 'static':
         $page_data['activeClass']['static'] = 'active';
-        $global_vars = $d->getGlobalVars(intval($_GET['did']));
+        $global_vars = $d->getGlobalVarsByDomain(intval($_GET['did']));
         $vars_html = '';
         foreach ($global_vars as $global_var) {
             $global_var['domain'] = $page_data['domain'];

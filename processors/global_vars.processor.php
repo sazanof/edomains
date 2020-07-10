@@ -6,6 +6,12 @@ if (intval($_GET['gvid'])) {
     $page_data['fields'] = $gvar;
     $page_data['fields']['type_' . $gvar['type']] = 'selected';
 }
+if($_GET['delgvid']){
+    $id = intval($_GET['delgvid']);
+    $d->deleteGlobalVar($id);
+   // evolutionCMS()->sendRedirect(explode('&delgvid=',$_SERVER['REQUEST_URI'])[0]);
+
+}
 switch ($_POST['formid']) {
     case 'loadVarType':
         $gvid = intval($_POST['gvid']);
@@ -21,7 +27,7 @@ switch ($_POST['formid']) {
                 $out = '<label>Текстовое значение</label><input type="text" name="default_value" value="' . $value . '">';
                 break;
             case 2 :
-                $out = '<label>Визуальные редактор</label><textarea name="default_value">' . $value . '</textarea>';
+                $out = '<label>Текстовая область</label><textarea name="default_value">' . $value . '</textarea>';
                 break;
             case 3 :
                 $out = '<label>Название чанка</label><input type="text" name="default_value" required value="' . $value . '" placeholder="Имя чанка в системе">';
